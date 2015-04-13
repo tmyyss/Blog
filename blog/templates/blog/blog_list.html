@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+{% if blogs %}
+<ul>
+{% for blog in blogs %}
+	<li><a href='{% url 'blogs:detail' blog.id %}'>{{blog.title}}</a></li>
+{% endfor %}
+</ul>
+{% else %}
+<p>博主太懒了，还没有写博客。</p>
+{% endif %}
+{% endblock %}
+

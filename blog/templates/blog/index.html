@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="article">
+	{% if blogs %}
+	{% for blog in blogs %}
+	<a href={% url 'blogs:detail' blog.id %}><h2>{{blog.title}}</h2><div class="clr"></div></a>
+	<p><span class='date'>Date:{{blog.published_time}}</span>&nbsp;|&nbsp;Posted by:{{blog.user}}<p>
+	{{blog.text|linebreaks|truncatechars:200}}
+	<p class="spec"><a href="{% url 'blogs:detail' blog.id %}">readmore</a></p>
+	{% endfor %}
+	{% else %}
+	<p>No blogs published</p>
+	{% endif %}
+</div>
+<div class="pagination">
+	<span class="step-links">
+	{% if blogs.has_previous %}
+	<a href="?page={{ blogs.previous_page_number }}">previous</a>
+	{% endif %}
+		<span class="current">
+			Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}.
+		</span>
+	{% if blogs.has_next %}
+	<a href="?page={{ blogs.next_page_number }}">next</a>
+	{% endif %}		
+	</span>
+</div>
+{% endblock content %}
