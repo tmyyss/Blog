@@ -11,6 +11,7 @@ class Blog(models.Model):
 	text=models.TextField(verbose_name=u'正文内容')
 	created_time=models.DateTimeField(default=timezone.now,verbose_name=u'创建时间')
 	published_time=models.DateTimeField(blank=True,null=True,verbose_name=u'发布时间')
+	visitors=models.IntegerField(default=0,verbose_name=u'访问量')
 
 	def __unicode__(self):
 		return self.title

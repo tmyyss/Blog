@@ -50,14 +50,11 @@
           					</form>
         				</div>
         				<div class="gadget">
-          					<h2 class="star"><span>友情链接</span></h2><div class='clr'></div>
+          					<h2 class="star"><span>最热博文排行榜</span></h2><div class='clr'></div>
           					<ul class="sb_menu">
-            						<li><a href="#">百度</a></li>
-            						<li><a href="#">搜狗</a></li>
-            						<li><a href="#">豆瓣</a></li>
-            						<li><a href="#">cnbeta</a></li>
-            						<li><a href="#">腾讯</a></li>
-            						<li><a href="#">淘宝</a></li>
+            						{% for blog in mblogs %}
+							<li><a href={% url 'blogs:detail' blog.id %}>{{blog.title}}({{blog.visitors}})</a></li>
+							{% endfor %}
           					</ul>
         				</div>
         				<div class="gadget">
