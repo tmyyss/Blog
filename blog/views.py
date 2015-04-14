@@ -22,7 +22,7 @@ def index(request):
 	return render(request,'blog/index.html',{'blogs':blogs,'mblogs':mblogs})
 	
 def list(request):
-	blog_list=Blog.objects.all()
+	blog_list=Blog.objects.all().order_by('-published_time')
 	mblogs=Blog.objects.all().order_by('-visitors')[:5]
         paginator=Paginator(blog_list,10)
 
@@ -37,8 +37,8 @@ def list(request):
 
         return render(request,'blog/blog_list.html',{'blogs':blogs,'mblogs':mblogs})
 
-def detail(request,id):
-	post=get_object_or_404(Blog,pk=id)
+def detail(request,pk):
+	post=get_object_or_404(Blog,pk=pk)
 	mblogs=Blog.objects.all().order_by('-visitors')[:5]
 	post.visitors=post.visitors+1
 	post.save()
@@ -55,31 +55,33 @@ def edit(request):
 			post.created_time=datetime.datetime.now()
 			post.published_time=datetime.datetime.now()
 			post.save()
-			return render(request,'blog/detail.html',{'blog':post,'mblogs':mblogs})
+			return redirect(detail,pk=post.pk)
 	else:
 		form=PostForm()
 	return render(request,'blog/edit.html',{'form':form,'mblogs':mblogs})
 
 @login_required
-def update(request,id):
+def update(request,pk):
 	mblogs=Blog.objects.all().order_by('-visitors')[:5]
-	post=get_object_or_404(Blog,pk=id)
-	if request.method=='POST':
+	post=get_object_or_404(Blog,pk=pk)
+	if request.method=="POST":
                 form=PostForm(request.POST,instance=post)
 		if form.is_valid():
 			post=form.save(commit=False)
 			post.user=request.user
 			post.save()
-			return render(request,'blog/detail.html',{'blog':post,'mblogs':mblogs})
+			return redirect(detail,pk=post.pk)
 	else:
 		form=PostForm(instance=post)
-        return render(request,'blog/edit.html',{'form':form,'mblogs':mblogs})
+        return render(request,'blog/update.html',{'form':form,'mblogs':mblogs})
 
 @login_required
-def remove(request,id):
+def remove(request,pk):
 	mblogs=Blog.objects.all().order_by('-visitors')[:5]
-	blog=get_object_or_404(Blog,pk=id)
-	Blog.objects.filter(pk=id).delete()
+	blog=get_object_or_404(Blog,pk=pk)
+	Blog.objects.filter(pk=pk).delete()
         return render(request,'blog/after_remove.html',{'mblogs':mblogs})
 
-
+def aboutme(request):	
+	mblogs=Blog.objects.all().order_by('-visitors')[:5]
+	return render(request,'blog/aboutme.html',{'mblogs':mblogs})

@@ -1,5 +1,5 @@
 {% load staticfiles %}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>能近取譬</title>
@@ -13,7 +13,7 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8"><h1><a href="/">能近取譬</a> <small>向文彬的个人博客</small></h1></div>
+			<div class="col-md-8"><h1><a href="/">能近取譬</a></h1></div>
 			<div class='col-md-4'>
 			{% if user.is_authenticated %}
 			<p>欢迎您，{{user.username}}!<a href="{% url 'django.contrib.auth.views.logout' %}">登出</a></p>
@@ -26,10 +26,10 @@
 			<div class="col-md-6">
 				<div class="nav" role="navigation">
 					<ul class='nav nav-tabs'>
-          					<li role='prensentation' class="active"><a href="{% url 'blogs:index' %}">主页</a></li>
-          					<li role="prensentation"><a href="{% url 'blogs:list' %}">博客</a></li>
+          					<li role='prensentation' class="active"><a href="{% url 'index' %}">主页</a></li>
+          					<li role="prensentation"><a href="{% url 'list' %}">博客</a></li>
           					<li role="presentation" ><a href="http://shop102757287.taobao.com/?spm=a230r.7195193.1997079397.2.whO1jy">老婆的淘宝店</a></li>
-          					<li role="presentation" ><a href="about.html">关于我</a></li>
+          					<li role="presentation" ><a href="{% url 'aboutme' %}">关于我</a></li>
 					</ul>
       				</div>
     			</div>
@@ -54,7 +54,7 @@
         				</div>
           				<h4><span>最热博文排行榜</span></h4>
             				{% for blog in mblogs %}
-					<p><a href={% url 'blogs:detail' blog.id %}>{{blog.title}}({{blog.visitors}})</a></p>
+					<p><a href={% url 'detail' blog.pk %}>{{blog.title}}({{blog.visitors}})</a></p>
 					{% endfor %}
           				<h4><span>友情链接</span></h4>
             				<a href="http://www.baidu.com" title="Website Templates">百度</a>
