@@ -6,4 +6,6 @@ urlpatterns = patterns('',
 	url(r'^index','blog.views.index'),	
 	url(r'^blogs/', include('blog.urls',namespace='blogs')),
 	url(r'^admin/', include(admin.site.urls)),
+	url(r'^accounts/login/$','django.contrib.auth.views.login'),
+	url(r'^accounts/logout/$','django.contrib.auth.views.logout',{'next_page':'/'}),
 )

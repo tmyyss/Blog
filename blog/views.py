@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from blog.models import Blog,PostForm
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 import datetime
 
 def index(request):
@@ -43,6 +44,7 @@ def detail(request,id):
 	post.save()
 	return render(request,'blog/detail.html',{'blog':post,'mblogs':mblogs})	
 
+@login_required
 def edit(request):
 	mblogs=Blog.objects.all().order_by('-visitors')[:5]
 	if request.method=='POST':
@@ -58,6 +60,7 @@ def edit(request):
 		form=PostForm()
 	return render(request,'blog/edit.html',{'form':form,'mblogs':mblogs})
 
+@login_required
 def update(request,id):
 	mblogs=Blog.objects.all().order_by('-visitors')[:5]
 	post=get_object_or_404(Blog,pk=id)
@@ -71,6 +74,8 @@ def update(request,id):
 	else:
 		form=PostForm(instance=post)
         return render(request,'blog/edit.html',{'form':form,'mblogs':mblogs})
+
+@login_required
 def remove(request,id):
 	mblogs=Blog.objects.all().order_by('-visitors')[:5]
 	blog=get_object_or_404(Blog,pk=id)

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>www.cssmoban.com-模板之家</title>
+	<title>能近取譬</title>
 	<meta http-equiv="Content-Type" content="text/html" charset="gb2312" />
 	<link href="{% static 'blog/style.css' %}" rel="stylesheet" type="text/css" />
 	<!--script type="text/javascript" src="{% static 'blog/js/cufon-yui.js' %}"></script-->
@@ -20,6 +20,11 @@
 		<div class="header">
 			<div class="header_resize">
 				<div class="logo"><h1><a href="index.html">能近取譬</a> <small>向文彬的个人博客</small></h1></div>
+				{% if user.is_authencated %}
+				<p>欢迎您，{{user.username}}!<a href="{% url 'django.contrib.auth.views.logout' %}">登出</a></p>
+				{% else %}
+				<p>欢迎您，游客!<a href="{% url 'django.contrib.auth.views.login' %}">登录</a></p>
+				{% endif %}
 			        <div class="menu_nav">
 					<ul id='nav'>
           					<li class="current"><a href={% url 'blogs:index' %}>主页</a></li>
