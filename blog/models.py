@@ -6,6 +6,9 @@ from django.forms import ModelForm
 
 # Create your models here.
 class Blog(models.Model):
+	class Meta:
+		verbose_name=u'文章'
+		verbose_name_plural=u'文章'
 	user=models.ForeignKey(User,verbose_name=u'作者')
 	title=models.CharField(max_length=200,verbose_name=u'文章标题')
 	text=models.TextField(verbose_name=u'正文内容')

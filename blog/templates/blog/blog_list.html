@@ -1,12 +1,12 @@
 {% extends 'blog/base.html' %}
 {% block content %}
 <div class='col-md-2 col-md-offset-10'>
-	<a href={% url 'edit' %}><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+	<a href={% url 'blog:edit' %}><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 </div>
 {% if blogs %}
 <ul>
 {% for blog in blogs %}
-	<li><h5><a href='{% url 'detail' blog.pk %}'>{{blog.title}}</a></h5></li>
+	<li><h5><a href='{% url 'blog:detail' blog.pk %}'>{{blog.title}}</a></h5></li>
 {% endfor %}
 </ul>
 {% else %}

@@ -1,7 +1,15 @@
+#coding:utf-8
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 from django.shortcuts import render,get_object_or_404,redirect
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from blog.models import Blog,PostForm
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from haystack.forms import SearchForm
 import datetime
 
 def index(request):
@@ -55,7 +63,7 @@ def edit(request):
 			post.created_time=datetime.datetime.now()
 			post.published_time=datetime.datetime.now()
 			post.save()
-			return redirect(detail,pk=post.pk)
+			return render(request,'blog/detail.html',{'blog':post,'mblogs':mblogs})
 	else:
 		form=PostForm()
 	return render(request,'blog/edit.html',{'form':form,'mblogs':mblogs})
@@ -70,7 +78,7 @@ def update(request,pk):
 			post=form.save(commit=False)
 			post.user=request.user
 			post.save()
-			return redirect(detail,pk=post.pk)
+			return render(request,'blog/detail.html',{'blog':post,'mblogs':mblogs})
 	else:
 		form=PostForm(instance=post)
         return render(request,'blog/update.html',{'form':form,'mblogs':mblogs})
@@ -85,3 +93,12 @@ def remove(request,pk):
 def aboutme(request):	
 	mblogs=Blog.objects.all().order_by('-visitors')[:5]
 	return render(request,'blog/aboutme.html',{'mblogs':mblogs})
+
+def search(request):
+	mblogs=Blog.objects.all().order_by('-visitors')[:5]
+	keywords=request.GET['q']
+	keywords.encode('gb2312')
+	sform=SearchForm(request.GET)
+	blogs=sform.search()
+	return render(request,'blog/search.html',{'mblogs':mblogs,'blogs':blogs,'list_header':'关键字\'{}\'搜索结果'.format(keywords)})
+	

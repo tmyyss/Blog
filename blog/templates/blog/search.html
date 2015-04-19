@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h2>Search</h2>
+
+{% if blogs %}
+	{% for blog in blogs %}
+		<a href="{% url 'blog:detail' pk=blog.pk %}" ><h4>{{blog.title}}</h4></a>
+		<p>{{blog.text|linebreaks|truncatechars:90}}</p>
+	{% endfor %}
+{% else %}
+	<p>No searched</p>
+{% endif %}
+{% endblock %}

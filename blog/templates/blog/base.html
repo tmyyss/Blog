@@ -26,10 +26,10 @@
 			<div class="col-md-6">
 				<div class="nav" role="navigation">
 					<ul class='nav nav-tabs'>
-          					<li role='prensentation' class="active"><a href="{% url 'index' %}">主页</a></li>
-          					<li role="prensentation"><a href="{% url 'list' %}">博客</a></li>
+          					<li role='prensentation' class="active"><a href="{% url 'blog:index' %}">主页</a></li>
+          					<li role="prensentation"><a href="{% url 'blog:list' %}">博客</a></li>
           					<li role="presentation" ><a href="http://shop102757287.taobao.com/?spm=a230r.7195193.1997079397.2.whO1jy">老婆的淘宝店</a></li>
-          					<li role="presentation" ><a href="{% url 'aboutme' %}">关于我</a></li>
+          					<li role="presentation" ><a href="{% url 'blog:aboutme' %}">关于我</a></li>
 					</ul>
       				</div>
     			</div>
@@ -45,19 +45,23 @@
 				{% block content %}
 				{% endblock %}
 				</div>
-				<div class="col-md-3">
-        				<div class="input-group">
-          					<input type="text" class="form-control" placeholder="搜索...">
-            					<span class="btn btn-default">
-							<button class="btn btn-default" type="button">搜索</button>
-						</span>
-        				</div>
+				<div class="col-md-4">
+					<div id="searchbox">
+						<form action="{% url 'blog:search' %}" method="get">
+        						<div class="content">
+            							<label>
+                							<input type="text" class="textfield searchtip" name="q" size="20" value="">
+            							</label>
+            							<input type="submit" class="button" value="搜索">
+       		 					</div>
+    						</form>
+					</div>
           				<h4><span>最热博文排行榜</span></h4>
             				{% for blog in mblogs %}
-					<p><a href={% url 'detail' blog.pk %}>{{blog.title}}({{blog.visitors}})</a></p>
+					<p><a href={% url 'blog:detail' blog.pk %}>{{blog.title}}({{blog.visitors}})</a></p>
 					{% endfor %}
           				<h4><span>友情链接</span></h4>
-            				<a href="http://www.baidu.com" title="Website Templates">百度</a>
+            				<a href="http://www.baidu.com" >百度</a>
       				</div>
     			</div>
 		</div>

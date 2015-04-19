@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    'haystack',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,3 +103,12 @@ MIDDLEWARE_CLASSED = (
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.cache.FetchFromCacheMiddleware',
 )
+
+HAYSTACK_CONNECTIONS = {
+	'default':{
+		'ENGINE':'blog.whoosh_cn_backend.WhooshEngine',
+		'PATH':os.path.join(BASE_DIR,'whoosh_index'),
+		},
+}
+
+HAYSTACK_SIGAL_PROCESSOR='haystack.signals.RealtimeSignalProcessor'

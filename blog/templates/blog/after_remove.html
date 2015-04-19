@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-<a href={% url 'index' %}>返回主页</a>
-<a href={% url 'list' %}>返回博客列表页面</a>
+<a href={% url 'blog:index' %}>返回主页</a>
+<a href={% url 'blog:list' %}>返回博客列表页面</a>
 {% endblock %}
 
