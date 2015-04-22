@@ -1,5 +1,6 @@
-from django.conf.urls import patterns,url
-
+from django.conf.urls import patterns,url,include
+from django.conf import settings
+from django.conf.urls.static import static
 from blog import views
 
 urlpatterns = patterns('',
@@ -11,4 +12,4 @@ urlpatterns = patterns('',
 	url(r'^blog/(?P<pk>\d+)/remvoe/$',views.remove,name='remove'),
 	url(r'^aboutme/$',views.aboutme,name='aboutme'),
 	url(r'^search/',views.search,name='search'),
-)
+)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

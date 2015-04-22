@@ -5,8 +5,8 @@
 	{% for blog in blogs %}
 	<a href="{% url 'blog:detail' blog.id %}"><h3>{{blog.title|truncatechars:30}}</h3></a>
 	<p><span class='date'>发布日期:{{blog.published_time}}</span>&nbsp;|&nbsp;作者:{{blog.user}}&nbsp;|&nbsp;访问量:{{blog.visitors}}<p>
-	{{blog.text|linebreaks|truncatechars:200}}
-	<p class="lead"><a href="{% url 'blog:detail' blog.id %}">readmore</a></p>
+	{{blog.text|safe|linebreaks|truncatechars:200}}
+	<p class="lead"><a href="{% url 'blog:detail' blog.id %}">阅读更多</a></p>
 	{% endfor %}
 	{% else %}
 	<p>No blogs published</p>

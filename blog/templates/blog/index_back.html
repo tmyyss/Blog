@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="article">
+	{% if blogs %}
+	{% for blog in blogs %}
+	<a href="{% url 'blog:detail' blog.id %}"><h3>{{blog.title|truncatechars:30}}</h3></a>
+	<p><span class='date'>发布日期:{{blog.published_time}}</span>&nbsp;|&nbsp;作者:{{blog.user}}&nbsp;|&nbsp;访问量:{{blog.visitors}}<p>
+	{{blog.text|linebreaks|truncatechars:200}}
+	<p class="lead"><a href="{% url 'blog:detail' blog.id %}">readmore</a></p>
+	{% endfor %}
+	{% else %}
+	<p>No blogs published</p>
+	{% endif %}
+</div>
+<div class="pagination">
+	<span class="step-links">
+	{% if blogs.has_previous %}
+	<a href="?page={{ blogs.previous_page_number }}">previous</a>
+	{% endif %}
+		<span class="current">
+			Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}.
+		</span>
+	{% if blogs.has_next %}
+	<a href="?page={{ blogs.next_page_number }}">next</a>
+	{% endif %}		
+	</span>
+</div>
+{% endblock content %}
